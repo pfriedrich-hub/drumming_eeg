@@ -10,23 +10,17 @@ eeg_DIR = DIR / "data"
 subdir = '100 bpm'
 filename = 'record-[2022.11.04-17.23.44].vhdr'
 
-
 raw = mne.io.read_raw_brainvision(eeg_DIR / subdir / filename, preload=True)
 
-mapping = {"1": "Fp1", "2": "Fp2", "3": "F7", "4": "F3", "5": "Fz", "6": "F4",
-           "7": "F8", "8": "FC5", "9": "FC1", "10": "FC2", "11": "FC6",
-           "12": "T7", "13": "C3", "14": "Cz", "15": "C4", "16": "T8", "17": "TP9",
-           "18": "CP5", "19": "CP1", "20": "CP2", "21": "CP6", "22": "TP10",
-           "23": "P7", "24": "P3", "25": "Pz", "26": "P4", "27": "P8", "28": "PO9",
-           "29": "O1", "30": "Oz", "31": "O2", "32": "PO10", "33": "AF7", "34": "AF3",
-           "35": "AF4", "36": "AF8", "37": "F5", "38": "F1", "39": "F2", "40": "F6",
-           "41": "FT9", "42": "FT7", "43": "FC3", "44": "FC4", "45": "FT8", "46": "FT10",
-           "47": "C5", "48": "C1", "49": "C2", "50": "C6", "51": "TP7", "52": "CP3",
-           "53": "CPz", "54": "CP4", "55": "TP8", "56": "P5", "57": "P1", "58": "P2",
-           "59": "P6", "60": "PO7", "61": "PO3", "62": "POz", "63": "PO4", "64": "PO8"}
+mapping = {"Channel 1": "Fp1", "Channel 2": "Fp2", "Channel 3": "F3", "Channel 4": "F4",
+           "Channel 5": "C3", "Channel 6": "C4", "Channel 7": "P3", "Channel 8": "P4",
+           "Channel 9": "O1", "Channel 10": "O2", "Channel 11": "F7", "Channel 12": "F8",
+           "Channel 13": "T7", "Channel 14": "T8", "Channel 15": "P7", "Channel 16": "P8",
+           "Channel 17": "Fz", "Channel 18": "Cz", "Channel 19": "Pz", "Channel 20": "M1",
+           "Channel 21": "M2", "Channel 22": "AFz", "Channel 23": "CPz", "Channel 24": "POz"}
 raw.rename_channels(mapping)
-
-montage = mne.channels.make_standard_montage('easycap-M10')
+raw.drop_channels(['M1', 'M2', 'Gyro 1', 'Gyro 2', 'Gyro 3'])
+montage = mne.channels.make_standard_montage('easycap-M1')
 raw.set_montage(montage)
 
 
